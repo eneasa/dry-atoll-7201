@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+	<title>Flick</title>
+
+	<script>
+	var socket;
+	if (window.hyper && window.hyper.log) { console.log = hyper.log }
+
+	</script>
+	<script src="libs/jquery/jquery.js"></script>
+	<script type="text/javascript" src="http://cdn.socket.io/socket.io-1.0.3.js"></script>
+</head>
+
+<body>
+
+	<h1>Flic</h1>
+	<p><i>Order beer with one click.</i></p>
+	
+	<button id="img1" class="button">img 1</button>
+	<button id="img2" class="button">img 2</button>
+	<button id="img3" class="button">img 3</button>
+
+	<div id="debugger" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px"></div>
+
+	<script>
+	if (typeof console  != "undefined") 
+	    if (typeof console.log != 'undefined')
+	        console.olog = console.log;
+	    else
+	        console.olog = function() {};
+
+	console.log = function(message) {
+	    console.olog(message);
+	    $('#debugger').append('<p>' + message + '</p>');
+	};
+	console.error = console.debug = console.info =  console.log
+	console.log("v1");
+
+	
+
+	$('#img1, #img2, #img3').click(function(evt){
+		console.log("Manually triggered: " + this.id);
+		socket.send(this.id); 
+	});
+
+	
+
+  $( document ).ready(function() {
+        console.log("starting new connection.")
+        console.log("Device ready.");
+	    socket = io.connect('http://localhost:5000');
+	    socket.on('connect', function() {
+	      console.log("Socket connected!")
+	     });
+
+	    if (window.location.search.indexOf("?img") > -1) {
+	    	var img = window.location.search.replace('?', '')
+    		console.log("HTTP triggered: " + img);
+			socket.send(img); 
+		}
+
+	});
+
+
+	</script>
+</body>
+</html>

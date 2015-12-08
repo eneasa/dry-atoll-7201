@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no
+    initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+  <title>iBeacons POC</title>
+  <style>
+.button {
+  display: inline-block;
+  box-sizing: border-box;
+  font-family: 'Proxima Nova Black';
+  font-size: inherit;
+  line-height: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  margin: 0.5em 0 0.5em 0;
+  padding: 9px 13px 8px 13px;
+  border-radius: 4px;
+  border: none;
+  box-shadow: none;
+  background-color: #b9b9b9;
+}
+  </style>
+  <script>
+  var socket;
+  </script>
+  <script src="js/jquery.js"></script>
+  <script src="js/socket.io-1.0.3.js"></script>
+</head>
+
+<body>
+
+  <h1>iBeacon POC</h1>
+  <p><i>This client is for testing the POC.</i></p>
+  
+  <span id="tv1ad1" class="button">TV1 Ad1</span>
+  <span id="tv1ad2" class="button">TV1 Ad2</span>
+  <br/>
+  <span id="tv2ad1" class="button">TV2 Ad1</span>
+  <span id="tv2ad2" class="button">TV2 Ad2</span>
+
+  <div id="debugger"></div>
+
+  <script>
+  if (typeof console  != "undefined") 
+      if (typeof console.log != 'undefined')
+          console.olog = console.log;
+      else
+          console.olog = function() {};
+
+  console.log = function(message) {
+      console.olog(message);
+      $('#debugger').append('<p>' + message + '</p>');
+  };
+  console.error = console.debug = console.info =  console.log
+  console.log("v1");
+
+  $(document).ready(function() {
+      console.log("Ready.");
+      socket = io.connect('https://obscure-headland-2303.herokuapp.com');
+      socket.on('connect', function() {
+        console.log("Socket connected!")
+       });
+    });
+
+  $('#tv1ad1, #tv1ad2, #tv2ad1, #tv2ad2').click(function(evt){
+    console.log("Manually triggered: " + this.id);
+    socket.send(this.id); 
+  });
+
+  </script>
+</body>
+</html>
