@@ -31,8 +31,8 @@
   console.error = console.debug = console.info =  console.log
   console.log("Opening Connection");
 
-    //var socket = io.connect('https://dry-atoll-7201.herokuapp.com/');
-    var socket = io.connect('http://localhost:5000/');
+    var socket = io.connect('https://dry-atoll-7201.herokuapp.com/');
+    //var socket = io.connect('http://localhost:5000/');
     socket.on('connect', function() {
       console.log("Socket connected!");
       console.log("Waiting for order...");
@@ -41,7 +41,7 @@
       console.log("Order Received:" + text);
 
 
-        if (text == 'img1') { 
+        if (text == 'img2') { 
           hideAll();
           $('#order').fadeIn(3000);
           //console.log("show 1")
