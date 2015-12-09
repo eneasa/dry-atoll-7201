@@ -10,8 +10,8 @@
 	if (window.hyper && window.hyper.log) { console.log = hyper.log }
 
 	</script>
-	<script src="libs/jquery/jquery.js"></script>
-	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.0.3.js"></script>
+  <script src="js/jquery.js"></script>
+  <script src="js/socket.io-1.0.3.js"></script>
 </head>
 
 <body>
@@ -52,6 +52,7 @@
         console.log("starting new connection.")
         console.log("Device ready.");
 	    socket = io.connect('https://dry-atoll-7201.herokuapp.com');
+	    //socket = io.connect('http://localhost:5000');
 	    socket.on('connect', function() {
 	      console.log("Socket connected!")
 	     });
