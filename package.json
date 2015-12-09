@@ -1,0 +1,18 @@
+{
+  "name": "Flic",
+  "version": "0.0.0",
+  "description": "A tiny demo using the [einaros/ws](http://einaros.github.io/ws/) WebSockets implementation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "socket.io": "~1.3.5",
+    "ws": "~0.4.32",
+    "express": "~4.12.3"
+  },
+  "devDependencies": {}
+}
