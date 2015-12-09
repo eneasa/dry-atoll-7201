@@ -1,75 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, user-scalable=no
-    initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-  <title>iBeacons POC</title>
-  <style>
-.button {
-  display: inline-block;
-  box-sizing: border-box;
-  font-family: 'Proxima Nova Black';
-  font-size: inherit;
-  line-height: 100%;
-  text-align: center;
-  text-transform: uppercase;
-  color: #fff;
-  margin: 0.5em 0 0.5em 0;
-  padding: 9px 13px 8px 13px;
-  border-radius: 4px;
-  border: none;
-  box-shadow: none;
-  background-color: #b9b9b9;
-}
-  </style>
-  <script>
-  var socket;
-  </script>
-  <script src="js/jquery.js"></script>
-  <script src="js/socket.io-1.0.3.js"></script>
+	<meta charset="utf-8" />
+
+	<title>Flick</title>
+
+	<script>
+	var socket;
+	if (window.hyper && window.hyper.log) { console.log = hyper.log }
+
+	</script>
+	<script src="libs/jquery/jquery.js"></script>
+	<script type="text/javascript" src="http://cdn.socket.io/socket.io-1.0.3.js"></script>
 </head>
 
 <body>
 
-  <h1>iBeacon POC</h1>
-  <p><i>This client is for testing the POC.</i></p>
-  
-  <span id="tv1ad1" class="button">TV1 Ad1</span>
-  <span id="tv1ad2" class="button">TV1 Ad2</span>
-  <br/>
-  <span id="tv2ad1" class="button">TV2 Ad1</span>
-  <span id="tv2ad2" class="button">TV2 Ad2</span>
+	<h1>Flic</h1>
+	<p><i>Order beer with one click.</i></p>
+	
+	<button id="img1" class="button">img 1</button>
+	<button id="img2" class="button">img 2</button>
+	<button id="img3" class="button">img 3</button>
 
-  <div id="debugger"></div>
+	<div id="debugger" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px"></div>
 
-  <script>
-  if (typeof console  != "undefined") 
-      if (typeof console.log != 'undefined')
-          console.olog = console.log;
-      else
-          console.olog = function() {};
+	<script>
+	if (typeof console  != "undefined") 
+	    if (typeof console.log != 'undefined')
+	        console.olog = console.log;
+	    else
+	        console.olog = function() {};
 
-  console.log = function(message) {
-      console.olog(message);
-      $('#debugger').append('<p>' + message + '</p>');
-  };
-  console.error = console.debug = console.info =  console.log
-  console.log("v1");
+	console.log = function(message) {
+	    console.olog(message);
+	    $('#debugger').append('<p>' + message + '</p>');
+	};
+	console.error = console.debug = console.info =  console.log
+	console.log("v1");
 
-  $(document).ready(function() {
-      console.log("Ready.");
-      socket = io.connect('https://obscure-headland-2303.herokuapp.com');
-      socket.on('connect', function() {
-        console.log("Socket connected!")
-       });
-    });
+	
 
-  $('#tv1ad1, #tv1ad2, #tv2ad1, #tv2ad2').click(function(evt){
-    console.log("Manually triggered: " + this.id);
-    socket.send(this.id); 
-  });
+	$('#img1, #img2, #img3').click(function(evt){
+		console.log("Manually triggered: " + this.id);
+		socket.send(this.id); 
+	});
 
-  </script>
+	
+
+  $( document ).ready(function() {
+        console.log("starting new connection.")
+        console.log("Device ready.");
+	    socket = io.connect('https://dry-atoll-7201.herokuapp.com');
+	    socket.on('connect', function() {
+	      console.log("Socket connected!")
+	     });
+
+	    if (window.location.search.indexOf("?img") > -1) {
+	    	var img = window.location.search.replace('?', '')
+    		console.log("HTTP triggered: " + img);
+			socket.send(img); 
+		}
+
+	});
+
+
+	</script>
 </body>
 </html>
