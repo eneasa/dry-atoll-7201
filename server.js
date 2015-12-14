@@ -33,6 +33,7 @@ var Server = (function(){
             console.log("Someone connected.");
             //console.log(client);
             client.broadcast.emit('msg', 'Someone connected');
+            
             client.on('message', function (msg, info){
                 console.log(msg);
                 client.broadcast.emit('msg', msg);

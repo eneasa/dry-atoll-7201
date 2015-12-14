@@ -19,9 +19,9 @@
 	<h1>Flic</h1>
 	<p><i>Order beer with one click.</i></p>
 	
-	<button id="img1" class="button">img 1</button>
-	<button id="img2" class="button">img 2</button>
-	<button id="img3" class="button">img 3</button>
+	<p><button id="FLIC-0001" class="button">Order Six Pack XXXX GOLD - FFLIC-0001</button></p>
+	<p><button id="FLIC-0002" class="button">Order Six Pack XXXX Pale Ale - FFLIC-0002</button></p>
+	<p><button id="FLIC-0003" class="button">Order Case XXXX Gold - FFLIC-0001</button></p>
 
 	<div id="debugger" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px"></div>
 
@@ -37,22 +37,19 @@
 	    $('#debugger').append('<p>' + message + '</p>');
 	};
 	console.error = console.debug = console.info =  console.log
-	console.log("v1");
 
-	
-
-	$('#img1, #img2, #img3').click(function(evt){
-		console.log("Manually triggered: " + this.id);
+	$('#FLIC-0001, #FLIC-0002, #FLIC-0003').click(function(evt){
+		console.log("Manually ordered: " + this.id);
 		socket.send(this.id); 
 	});
 
 	
 
   $( document ).ready(function() {
-        console.log("starting new connection.")
+        console.log("Starting new connection.")
         console.log("Device ready.");
-	    socket = io.connect('https://dry-atoll-7201.herokuapp.com');
-	    //socket = io.connect('http://localhost:5000');
+	    //socket = io.connect('https://dry-atoll-7201.herokuapp.com');
+	    socket = io.connect('http://localhost:5000');
 	    socket.on('connect', function() {
 	      console.log("Socket connected!")
 	     });

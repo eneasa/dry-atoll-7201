@@ -16,7 +16,7 @@
   <span id="img2" style="display:none"><img src="img/img3.jpg" style="width:100%"></span>
   <span id="img3" style="display:none"><img src="img/img4.jpg" style="width:100%"></span>
 
-  <div id="debugger" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px"></div>
+  <div id="debugger" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px;"></div>
   <script>
   if (typeof console  != "undefined") 
         if (typeof console.log != 'undefined')
@@ -29,21 +29,27 @@
         $('#debugger').append('<p>' + message + '</p>');
     };
   console.error = console.debug = console.info =  console.log
+  console.log("Console");
   console.log("Opening Connection");
 
-    var socket = io.connect('https://dry-atoll-7201.herokuapp.com/');
-    //var socket = io.connect('http://localhost:5000/');
+    //var socket = io.connect('https://dry-atoll-7201.herokuapp.com/');
+    var socket = io.connect('http://localhost:5000/');
     socket.on('connect', function() {
       console.log("Socket connected!");
       console.log("Waiting for order...");
 
       socket.on('msg', function(text) {
-      console.log("Order Received:" + text);
+      //console.log("Activity Found: " + text);
 
 
-        if (text == 'img2') { 
+        if (text == 'FLIC-0001' || text == 'FLIC-0002' || text == 'FLIC-0003') { 
           hideAll();
-          $('#order').fadeIn(3000);
+          console.log("New Order: " + text);
+          $('#product').text(text);
+          $('#order').fadeIn(1500);
+          $('#order').delay(5000).fadeOut(1000);
+          $('#'+text).show();
+
           //console.log("show 1")
         }
         /*else if (text == 'img2') { 
@@ -60,18 +66,22 @@
     });
 
     function hideAll() {
-      $('#img1').hide();
-      $('#img2').hide();
-      $('#img3').hide();
-      console.log("hide all")
+      $('#FLIC-0001').hide();
+      $('#FLIC-0002').hide();
+      $('#FLIC-0003').hide();
+      //console.log("hide all")
     }
   </script>
-  <div id="order" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px;font-weight: bold; color: #000; display: none">
+  <p></p>
+  <div id="order" style="background-color: #F9F9F9; border: 2px solid #999; margin: 10px; padding: 10px; font-size: 12px;font-weight: bold; color: #000; display: none;">
     <p>New Order</p>
     <p>Name: <span style="font-weight: normal;">Juan EA Garcia</span></p>
     <p>Customer ID: <span style="font-weight: normal;">20470631-X</span></p>
-    <p>Product: <span style="font-weight: normal;">6 Pack - XXXX Gold</span></p>
-    <p><img src="img/beer.png" style=""></p>
+    <p>Product: <span style="font-weight: normal;" id="product"></span></p>
+    <p><img id="FLIC-0001" src="img/beer.png" style=""></p>
+    <p><img id="FLIC-0002" src="img/beer-2.png" style=""></p>
+    <p><img id="FLIC-0003" src="img/beer-3.png" style=""></p>
+
 
   </div>
 </body>

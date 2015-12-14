@@ -22,6 +22,8 @@ var Server = (function(){
     */
 
 
+
+
     /**
      * Client connection callback
      */
@@ -29,8 +31,8 @@ var Server = (function(){
     
         // If not exists a player 1, create it
         console.log("Someone connected.");
-        //console.log(client);
         client.broadcast.emit('msg', 'Someone connected');
+
         client.on('message', function (msg, info){
             console.log(msg);
             client.broadcast.emit('msg', msg);
@@ -43,6 +45,8 @@ var Server = (function(){
     onDisconnect = function () {
         console.log('Someone disconnected');
     };
+
+
 
     /**
      * Initialization method. Bind the server and socket events
@@ -63,6 +67,19 @@ var Server = (function(){
         // Instantiate socket.io using the created server
         socket = io.listen(server);
         socket.on('connection', onConnectionCallback);
+
+
+        app.get('/order/:id', function(req, res) {
+          
+            res.send('Order ' + req.params.id);
+
+             // Instantiate socket.io using the created server
+            socket.send(req.params.id); 
+            socket.emit(req.params.id); 
+
+            console.log("New flic order %s", req.params.id);
+                 
+            });
     })();
 
 
